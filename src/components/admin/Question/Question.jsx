@@ -99,7 +99,7 @@ export default function Question(){
 
 
 
-
+{/* 
 <div className="container-fluid py-5">
         <div className="container py-5">
           <div className="table-responsive">
@@ -182,19 +182,54 @@ export default function Question(){
             </table>
           </div>
         </div>
-      </div>
-
-      {/* <div className="d-flex justify-content-evenly m-5">
-        <h1>Update Questions</h1>
-        <Link to="/admin/question/update">
-          <button
-            className="w-100 btn form-control border-secondary py-3 bg-white text-primary "
-            type="submit"
-          >
-            Update Questions
-          </button>
-        </Link>
       </div> */}
+
+
+       <div className="row m-5">
+        {Question.map((ques) => (
+          <div className="col-md-4 mb-4" key={ques.id}>
+            <div className="card shadow-sm h-100">
+              <img
+                src={ques.image}
+                className="card-img-top"
+                alt={ques.category}
+                style={{ height: "200px", objectFit: "cover" }}
+              />
+
+              <div className="card-body">
+                <h5>{ques.category}</h5>
+
+                {/* <p>{ques.description}</p> */}
+
+                {/* <span
+                  className={`badge ${category.status ? "bg-success" : "bg-danger"}`}
+                >
+                  {category.status ? "Active" : "Inactive"}
+                </span> */}
+
+                <div className="mt-3">
+                  <Link to={`/admin/question/edit/${ques.id}`}>
+                    <button className="btn btn-md rounded-circle bg-light border mt-4">
+                      <i className="bi bi-pencil text-danger" />
+                    </button>
+                  </Link>
+                  &nbsp;
+                  <button
+                    className="btn btn-md rounded-circle bg-light border mt-4"
+                    onClick={() => {
+                      deleteCategory(ques.id);
+
+                      console.log(ques.id);
+                    }}
+                  >
+                    <i className="bi bi-trash text-danger" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
   
 </>
 

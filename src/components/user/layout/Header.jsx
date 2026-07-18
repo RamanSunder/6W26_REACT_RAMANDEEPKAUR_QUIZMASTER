@@ -10,7 +10,7 @@ export default function Header() {
   function logout() {
     Authservices.logout();
     toast.success("Logged Out");
-    nav("/login");
+    nav("/");
   }
 
   useEffect(() => {
@@ -45,13 +45,9 @@ export default function Header() {
                 <Link to="/categoryuser" className="nav-item nav-link">
                   Categories
                 </Link>
-                
-                {/* <Link to="/performance" className="nav-item nav-link">
-                  Performance
-                </Link> */}
 
                 {email ? (
-                  <Link to="#" className="nav-item nav-link" onClick={logout}>
+                  <Link to="/" className="nav-item nav-link" onClick={logout}>
                     Logout
                   </Link>
                 ) : (

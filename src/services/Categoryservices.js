@@ -18,6 +18,7 @@ class Categoryservices {
     newCategory.category = data.category;
     newCategory.description =  data.description;
     newCategory.institutionId = data.institutionId
+    newCategory.image = data.image
     const docref = await addDoc(collection(db, "Category"), { ...newCategory });
     return docref;
   }

@@ -23,7 +23,7 @@ export default function Login() {
       if(res.userType == "admin"){
         nav('/admin')
       }else{
-        nav('/')
+        nav('/home')
       }
     } catch (error) {
       switch (error.code) {

@@ -6,6 +6,7 @@ export default function Editcategory(){
 
     const [Category, setCategory] = useState([])
     const [Description, setDescription] = useState([])
+    const [image, setImage] = useState([])
 
     const param = useParams()
     const nav = useNavigate()
@@ -18,7 +19,9 @@ export default function Editcategory(){
         let payload = {
           category: Category,
           description : Description,
-        institutionId : localStorage.getItem("institutionId")
+        institutionId : localStorage.getItem("institutionId"),
+        image: image
+
         }
         await Categoryservices.edit(payload, param.id)
          toast.success("Category updated")
@@ -36,6 +39,7 @@ export default function Editcategory(){
       if(res){
         setCategory(res.category)
         setDescription(res.description)
+        setImage(res.image)
         
       }else{
         toast.error("Document not founded")
@@ -81,6 +85,17 @@ export default function Editcategory(){
               value={Description}
               onChange={(e)=>setDescription(e.target.value)}
             />
+
+            <input
+              type="text"
+              className="w-100 form-control border-0 py-3 mb-4"
+              placeholder="Enter Image URL"
+              value={image}
+              onChange={(e)=>setImage(e.target.value)}
+            />
+
+            
+                
 
             <button
               className="w-100 btn form-control border-secondary py-3 bg-white text-primary "

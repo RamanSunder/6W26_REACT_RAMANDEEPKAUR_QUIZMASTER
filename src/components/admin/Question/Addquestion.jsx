@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Categoryservices from "../../../services/Categoryservices";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Questionservices from "../../../services/Questionservices";
 import { db } from "../../../firebase/firebaseConfig";
 
@@ -14,12 +14,30 @@ export default function Addquestion() {
   const [answer, setAnswer] = useState("");
   const [category, setCategory] = useState([]);
   const [categoryId, setCategoryId] = useState("");
-  const nav = useNavigate();
+  const [image, setImage] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+ const handleCategoryChange = (e) => {
+  const id = e.target.value;
+
+  setCategoryId(id);
+
+  const selected = category.find((item) => item.id === id);
+
+  setSelectedCategory(selected);
+
+  if (selected) {
+    setImage(selected.image);
+  }
+};
+
+  const nav = useNavigate()
+  const {id} = useParams()
 
   async function addQuestion(e) {
     e.preventDefault();
     try {
-      
       let payload = {
         question: question,
         option1: option1,
@@ -28,12 +46,13 @@ export default function Addquestion() {
         option4: option4,
         answer: answer,
         categoryId: categoryId,
+        image: image,
         // institutionId: localStorage.getItem("instituitonId"),
       };
       console.log(payload);
 
       await Questionservices.add(payload);
-      toast.success("Category Added");
+      toast.success("Question Added");
       nav("/admin/question");
     } catch (error) {
       toast.error(error.message);
@@ -46,11 +65,25 @@ export default function Addquestion() {
     let res = await Categoryservices.all();
     // console.log(res);
     setCategory(res);
+
+     if (id) {
+    setCategoryId(id);
+
+    const selected = res.find((item) => item.id === id);
+
+    if (selected) {
+      setSelectedCategory(selected);
+      setImage(selected.image);
+    }
   }
+  }
+
+
 
   useEffect(() => {
     fetchCategory();
   }, []);
+
   return (
     <>
       <>
@@ -79,20 +112,36 @@ export default function Addquestion() {
                 <select
                   name=""
                   id=""
-                  className="form-control m-3"
+                  className="form-control mb-2"
+                
+                  value={categoryId} 
                   placeholder="Select Category"
-                  onChange={(e) => setCategoryId(e.target.value)}
+                  onChange={handleCategoryChange}
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     Select Category
                   </option>
                   {category.map((c) => (
-                    <option value={c.id}>{c.category}</option>
+                    <option value={c.id} key={c.id}>{c.category}</option>
                   ))}
                 </select>
 
+                {/* {selectedCategory && (
+                  <div className="mt-3">
+                    <img
+                      src={selectedCategory.image}
+                      alt={selectedCategory.name}
+                      width="120"
+                      height="120"
+                      style={{ objectFit: "cover", borderRadius: "8px" }}
+                    />
+                    <h5>{selectedCategory.name}</h5>
+                  </div>
+                )} */}
+
+
                 <div className="form-floating">
-                  <input
+                  <textarea
                     type="text"
                     className="form-control"
                     id="question"
@@ -101,7 +150,7 @@ export default function Addquestion() {
                     onChange={(e) => {
                       setQuestion(e.target.value);
                     }}
-                  />
+                  ></textarea>
                   <label>Question</label>
                 </div>
               </div>
@@ -203,7 +252,6 @@ export default function Addquestion() {
                     {option4}
                   </label>
                 </div>
-
               </div>
 
               <div className="col-12">

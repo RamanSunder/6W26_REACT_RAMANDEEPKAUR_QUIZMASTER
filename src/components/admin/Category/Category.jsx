@@ -47,7 +47,7 @@ export default function Category() {
             className="text-white display-4 mb-4 wow fadeInDown"
             data-wow-delay="0.1s"
           >
-            Categories
+           Manage Categories
           </h4>
         </div>
       </div>

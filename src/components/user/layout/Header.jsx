@@ -45,6 +45,9 @@ export default function Header() {
                 <Link to="/categoryuser" className="nav-item nav-link">
                   Categories
                 </Link>
+                {/* <Link to="/questionuser" className="nav-item nav-link">
+                  Quizzes
+                </Link> */}
 
                 {email ? (
                   <Link to="/" className="nav-item nav-link" onClick={logout}>

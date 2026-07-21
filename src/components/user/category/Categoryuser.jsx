@@ -1,210 +1,157 @@
-import { useEffect, useState } from "react"
-import {Link } from "react-router-dom"
-import Categoryservices from "../../../services/Categoryservices"
-export default function Categoryuser(){
-  const [Category, setCategory] = useState([])
-  
-  async function fetchCategory(){
-    let res = await Categoryservices.all()
-    setCategory(res)
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Categoryservices from "../../../services/Categoryservices";
+import { useEffect } from "react";
+import Questionservices from "../../../services/Questionservices";
+export default function Categoryuser() {
+  const [category, setCategory] = useState([]);
+  const [question, setQuestion] = useState([]);
+  const [categoryQuestions, setCategoryQuestions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const nav = useNavigate()
+  async function fetchCategory() {
+    let res = await Categoryservices.all();
+    setCategory(res);
   }
-  
-  useEffect(()=>{
-    fetchCategory()
-  })
-    
-    return(
-        <>
-  {/* Header Start */}
-  <div className="container-fluid bg-breadcrumb">
-    <div className="container text-center py-5" style={{ maxWidth: 900 }}>
-      <h4
-        className="text-white display-4 mb-4 wow fadeInDown"
-        data-wow-delay="0.1s"
-      >Categories
-      </h4>
-      
-    </div>
-  </div>
-  {/* Header End */}
-  {/* Blog Start */}
-  {/* <div className="container-fluid blog py-5">
-    <div className="container py-5">
-      <div
-        className="text-center mx-auto pb-5 wow fadeInUp"
-        data-wow-delay="0.1s"
-        style={{ maxWidth: 800 }}
-      >
-        
-        
+  async function fetchQuestion() {
+    let res = await Questionservices.all();
+    setQuestion(res);
+  }
+
+  function openCategory(categoryId, category) {
+    console.log(categoryId, category);
+
+    const filtered = question.filter((q) => q.categoryId === categoryId);
+    console.log("All Questions:", question);
+    console.log(filtered);
+
+    setSelectedCategory(category);
+    setCategoryQuestions(filtered);
+  }
+
+  useEffect(() => {
+    fetchCategory();
+    fetchQuestion();
+  }, []);
+
+  return (
+    <>
+      {/* Header Start */}
+      <div className="container-fluid bg-breadcrumb">
+        <div className="container text-center py-5" style={{ maxWidth: 900 }}>
+          <h4
+            className="text-white display-4 mb-4 wow fadeInDown"
+            data-wow-delay="0.1s"
+          >
+            View Categories
+          </h4>
+        </div>
       </div>
-
-
-      <div className="row g-4">
-        <div className="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-          <div className="blog-item">
-            <div className="blog-img">
-              <img 
-                src="/img/programming.jpg"
-                className="img-fluidrounded-top w-100"
-                 style={{ height: "250px", objectFit: "cover" }}
-                alt="Image"
-              />
-            </div>
-            <div className="blog-content rounded-bottom p-4">
-              <div className="blog-comment my-3">
-                
-                
-              </div>
-              <a href="#" className="h4 d-block mb-3">
-                Programming
-              </a>
-              <p className="mb-3">
-                Test your coding knowledge across multiple programming languages.C, C++, Java, Python, JavaScript, etc.
-              </p>
-              <Link href="to" className="">
-                <i className="fa fa-arrow-right" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-          <div className="blog-item">
-            <div className="blog-img ">
-              <img
-                src="/img/eng.png"
-                className="img-fluid rounded-top w-100"
-                 style={{ height: "250px", objectFit: "cover" }}
-                alt="Image"
-              />
-            </div>
-            <div className="blog-content rounded-bottom p-4">
-              <div className="blog-comment my-3">
-                
-               
-              </div>
-              <a href="#" className="h4 d-block mb-3">
-                English
-              </a>
-              <p className="mb-3">
-                Grammar, vocabulary, comprehension, and communication skills.
-              </p>
-              <Link href="to" className="">
-                <i className="fa fa-arrow-right" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-          <div className="blog-item">
-            <div className="blog-img">
-              <img
-                src="/img/science.jpeg"
-                className="img-fluid rounded-top w-100"
-                 style={{ height: "250px", objectFit: "cover" }}
-                alt="Image"
-              />
-            </div>
-            <div className="blog-content rounded-bottom p-4">
-              <div className="blog-comment my-3">
-                
-               
-              </div>
-              <a href="#" className="h4 d-block mb-3">
-                Science
-              </a>
-              <p className="mb-3">
-                Physics, Chemistry, Biology, and General Science questions.
-              </p>
-              <Link href="to" className="">
-                <i className="fa fa-arrow-right" />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-          <div className="blog-item ">
-            <div className="blog-img">
-              <img
-                src="/img/web.jpg"
-                className="img-fluid rounded-top w-100"
-                 style={{ height: "250px", objectFit: "cover" }}
-                alt="Image"
-              />
-            </div>
-            <div className="blog-content rounded-bottom p-4">
-              <div className="blog-comment my-3">
-                
-               
-              </div>
-              <a href="#" className="h4 d-block mb-3">
-                Web Development
-              </a>
-              <p className="mb-3">
-                Quizzes on HTML, CSS, JavaScript, React, and modern web technologies.HTML, CSS, Bootstrap, React, Node.js
-              </p>
-              <Link href="to" className="">
-                <i className="fa fa-arrow-right" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div> */}
-
-
-   <div className="container-fluid py-5">
+      {/* Header End */}
+      {/* Blog Start */}
+      <div className="container-fluid blog py-5">
         <div className="container py-5">
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">Sr. No</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Topic</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Created At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Category.map((Category, index) => (
-                  <tr>
-                    <td>
-                      <p className="mb-0 mt-4">{index + 1}</p>
-                    </td>
-                    <td>
-                      <p className="mb-0 mt-4">{Category.category}</p>
-                    </td>
-
-                    <td>
-                      <p className="mb-0 mt-4">{Category.topic}</p>
-                    </td>
-                    <td>
-                      <p className="mb-0 mt-4">
-                        {Category.status ? "Active" : "Inactive"}
-                      </p>
-                    </td>
-                    <td>
-                      <p className="mb-0 mt-4">
-                        {new Date(Category.createdAt).toLocaleTimeString()}
-                      </p>
-                    </td>
-                    
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div
+            className="text-center mx-auto pb-5 wow fadeInUp"
+            data-wow-delay="0.1s"
+            style={{ maxWidth: 800 }}
+          >
+            <p className="mb-0 fs-3">
+              Manage quiz categories by creating, updating, and organizing
+              topics. Categories help classify quizzes, making it easier for
+              users to find and attempt quizzes based on their interests.
+            </p>
           </div>
         </div>
       </div>
-  {/* Blog End */}
-  
-</>
+      {/* Blog End */}
 
-    )
+      <div className="row m-5">
+        {category.map((category) => (
+          <div className="col-md-4 mb-4" key={category.id}>
+            <div className="card shadow-sm h-100">
+              <img
+                src={category.image}
+                className="card-img-top"
+                alt={category.category}
+                style={{ height: "200px", objectFit: "cover" }}
+              />
+              <div
+                className="card-body"
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                   nav(`/questionuser/${category.id}`)
+                  }
+              >
+                <div className="card-body text-center">
+                  <h5>{category.category}</h5>
+                  <p>{category.description}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+      
+{selectedCategory && (
+  <>
+    <h2 className="mt-5">{selectedCategory}</h2>
+
+    {categoryQuestions.length > 0 ? (
+      categoryQuestions.map((q, index) => (
+        <div key={q.id} className="card mb-3 p-3">
+
+
+          <h5>
+            {index + 1}. {q.question}
+          </h5>
+
+          <div className="form-check">
+            <input
+              type="radio"
+              name={`q-${q.id}`}
+              className="form-check-input"
+            />
+            <label>{q.option1}</label>
+          </div>
+
+          <div className="form-check">
+            <input
+              type="radio"
+              name={`q-${q.id}`}
+              className="form-check-input"
+            />
+            <label>{q.option2}</label>
+          </div>
+
+          <div className="form-check">
+            <input
+              type="radio"
+              name={`q-${q.id}`}
+              className="form-check-input"
+            />
+            <label>{q.option3}</label>
+          </div>
+
+          <div className="form-check">
+            <input
+              type="radio"
+              name={`q-${q.id}`}
+              className="form-check-input"
+            />
+            <label>{q.option4}</label>
+          </div>
+
+        </div>
+      ))
+    ) : (
+      <p>No questions available.</p>
+    )}
+  </>
+)}
+    </>
+  );
 }

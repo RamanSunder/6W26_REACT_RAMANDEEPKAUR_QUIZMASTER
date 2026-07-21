@@ -27,6 +27,7 @@ import Login from './components/Authentication/Login';
 import Question from "./components/admin/Question/Question";
 import Addquestion from "./components/admin/Question/Addquestion";
 import Editquestion from "./components/admin/Question/Editquestion";
+import Questionuser from "./components/user/questionuser/Questionuser";
 
 
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="/admin/manageuser/add" element={<Adduser />}></Route>
             <Route path='/admin/question' element={<Question/>}></Route>
             <Route path='/admin/question/add' element={<Addquestion/>}></Route>
+            <Route path='/admin/question/add/:id' element={<Addquestion/>}></Route>
             <Route path="/admin/question/edit/:id" element={<Editquestion />}></Route>
 
             <Route
@@ -57,6 +59,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/home" element={<Home />}></Route>
             <Route path="/categoryuser" element={<Categoryuser />}></Route>
+            <Route path="/questionuser/:categoryId" element={<Questionuser />}></Route>
             <Route path="/performance" element={<Performance />}></Route>
           </Route>
         </Routes>

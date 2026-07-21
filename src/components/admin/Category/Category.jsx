@@ -47,7 +47,7 @@ export default function Category() {
             className="text-white display-4 mb-4 wow fadeInDown"
             data-wow-delay="0.1s"
           >
-           Manage Categories
+            Manage Categories
           </h4>
         </div>
       </div>
@@ -69,6 +69,7 @@ export default function Category() {
         </div>
       </div>
       {/* Blog End */}
+     
 
       <div className="d-flex justify-content-evenly ">
         <h1>Add Categories</h1>
@@ -81,6 +82,73 @@ export default function Category() {
           </button>
         </Link>
       </div>
+
+      {/* <div className="container-fluid py-5">
+        <div className="container py-5">
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Sr. No</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">InstitutionId</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Category.map((Category, index) => (
+                  <tr>
+                    <td>
+                      <p className="mb-0 mt-4">{index + 1}</p>
+                    </td>
+                    <td>
+                      <p className="mb-0 mt-4">{Category.category}</p>
+                    </td>
+
+                    <td>
+                      <p className="mb-0 mt-4">{Category.description}</p>
+                    </td>
+                    <td>
+                      <p className="mb-0 mt-4">{Category.institutionId}</p>
+                    </td>
+                    <td>
+                      <p className="mb-0 mt-4">
+                        {Category.status ? "Active" : "Inactive"}
+                      </p>
+                    </td>
+                    <td>
+                      <p className="mb-0 mt-4">
+                        {new Date(Category.createdAt).toLocaleTimeString()}
+                      </p>
+                    </td>
+                    <td>
+                      <Link to={`/admin/category/edit/${Category.id}`}>
+                        <button className="btn btn-md rounded-circle bg-light border mt-4">
+                          <i className="bi bi-pencil text-danger" />
+                        </button>
+                      </Link>
+                      &nbsp;
+                      <button
+                        className="btn btn-md rounded-circle bg-light border mt-4"
+                        onClick={() => {
+                          deleteCategory(Category.id);
+
+                          console.log(Category.id);
+                        }}
+                      >
+                        <i className="bi bi-trash text-danger" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> */}
 
       <div className="row m-5">
         {Category.map((category) => (

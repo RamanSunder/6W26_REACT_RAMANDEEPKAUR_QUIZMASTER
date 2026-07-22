@@ -49,6 +49,8 @@ export default function Header() {
                   Quizzes
                 </Link> */}
 
+
+
                 {email ? (
                   <Link to="/" className="nav-item nav-link" onClick={logout}>
                     Logout
@@ -63,6 +65,10 @@ export default function Header() {
                     </Link>
                   </>
                 )}
+
+                <Link to="#" className="nav-item nav-link">
+                  Manage Profile
+                </Link>
               </div>
             </div>
           </nav>

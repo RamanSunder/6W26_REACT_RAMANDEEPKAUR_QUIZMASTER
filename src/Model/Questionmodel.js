@@ -1,5 +1,6 @@
 export default class Questionmodel{
     categoryId =''
+    category =''
     question =''
     option1 =''
     option2 =''

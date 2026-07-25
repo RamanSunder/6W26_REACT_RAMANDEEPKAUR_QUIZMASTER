@@ -45,9 +45,9 @@ export default function Header() {
                 <Link to="/categoryuser" className="nav-item nav-link">
                   Categories
                 </Link>
-                {/* <Link to="/questionuser" className="nav-item nav-link">
-                  Quizzes
-                </Link> */}
+                <Link to="/myresult" className="nav-item nav-link">
+                  My Result
+                </Link>
 
 
 

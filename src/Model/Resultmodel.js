@@ -1,6 +1,7 @@
 export default class Resultmodel {
   userId = "";
   categoryId = "";
+  category=''
   score = 0;
   totalQuestion =0
   correctAnswer = 0
@@ -8,4 +9,7 @@ export default class Resultmodel {
   percentange = 0
   status = true;
   submittedAt = Date.now();
+
+
+  
 }

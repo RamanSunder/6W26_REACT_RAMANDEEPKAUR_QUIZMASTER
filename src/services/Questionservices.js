@@ -5,6 +5,7 @@ class Questionservices{
     async add(ques){
         let newQuestion = new Questionmodel() 
         newQuestion.categoryId = ques.categoryId
+        newQuestion.category = ques.category
         newQuestion.question = ques.question
         newQuestion.option1 = ques.option1
         newQuestion.option2 = ques.option2

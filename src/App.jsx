@@ -28,6 +28,7 @@ import Question from "./components/admin/Question/Question";
 import Addquestion from "./components/admin/Question/Addquestion";
 import Editquestion from "./components/admin/Question/Editquestion";
 import Questionuser from "./components/user/questionuser/Questionuser";
+import Myresult from "./components/user/myresult/Myresult";
 
 
 
@@ -60,7 +61,7 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/categoryuser" element={<Categoryuser />}></Route>
             <Route path="/questionuser/:categoryId" element={<Questionuser />}></Route>
-            <Route path="/performance" element={<Performance />}></Route>
+            <Route path="/myresult" element={<Myresult />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

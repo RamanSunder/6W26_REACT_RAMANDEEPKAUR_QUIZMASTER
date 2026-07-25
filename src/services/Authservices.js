@@ -24,6 +24,17 @@ class Authservices{
         return localStorage.getItem("userType")
     }
 
+    getData() {
+    return {
+        id: localStorage.getItem("id"),
+        email: localStorage.getItem("email"),
+        name: localStorage.getItem("name"),
+        userType: localStorage.getItem("userType"),
+        institutionId: localStorage.getItem("institutionId"),
+        token: localStorage.getItem("token"),
+    };
+}
+
     logout(){
         localStorage.clear()
         sessionStorage.clear()

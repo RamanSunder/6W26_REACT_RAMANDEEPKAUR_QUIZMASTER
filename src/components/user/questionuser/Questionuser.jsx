@@ -78,49 +78,7 @@ useEffect(() => {
       </div>
       {/* Blog End */}
 
-      {/* <div className="container py-5">
-  {question.length > 0 ? (
-    <>
-    {question.map((q, index) => (
-      <div key={q.id} className="card mb-3 p-3">
-        <h5>{index + 1}. {q.question}</h5>
-
-        <div className="form-check">
-          <input type="radio" name={q.id} />
-          <label>{q.option1}</label>
-        </div>
-
-        <div className="form-check">
-          <input type="radio" name={q.id} />
-          <label>{q.option2}</label>
-        </div>
-
-        <div className="form-check">
-          <input type="radio" name={q.id} />
-          <label>{q.option3}</label>
-        </div>
-
-        <div className="form-check">
-          <input type="radio" name={q.id} />
-          <label>{q.option4}</label>
-        </div>}
-
-        
-      </div>
      
-              </>
-    )
-    
-  )
-  
-  )
-   : (
-    <p>No questions found.</p>
-  )}
-
-  
-</div> */}
-
 <div className="container py-5">
 
   {question.length > 0 ? (

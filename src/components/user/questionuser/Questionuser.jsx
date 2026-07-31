@@ -72,14 +72,19 @@ console.log("Submit button clicked");
     });
 
     // Save result here later
-
+console.log("categoryId:", categoryId);
+console.log("category array:", category);
+console.log("First category:", category[0]);
 
 const selectedCategory = category.find(
   (item) => item.id === categoryId
 );
 
-const category= selectedCategory?.category || "";
+const categoryName = selectedCategory?.category || "";
     const user = Authservices.getData();
+console.log("Current User:", user);
+console.log("selectedcategory",selectedCategory);
+
 
 const result = new Resultmodel();
 
@@ -90,18 +95,35 @@ result.totalQuestion = question.length;
 result.correctAnswer = correct;
 result.wrongAnswer = wrong;
 result.score = correct;
+result.category = categoryName;
 result.percentage = (correct / question.length) * 100;
 
+
 try {
+  // console.log("Submit function started");
+
+  const user = Authservices.getData();
+  // console.log("Current User:", user);
+
+  // console.log("Result object:", result);
+
   await Resultservices.add(result);
-  console.log("Result saved");
+
+  // console.log("Result saved successfully");
 } catch (error) {
-  console.error(error);
+  console.error("Save Error:", error);
 }
   }
 
+   async function fetchCategory() {
+      let res = await Categoryservices.all();
+      setCategory(res);
+    }
+  
+
   useEffect(() => {
     fetchQuestions();
+    fetchCategory();
   }, []);
 
   //   console.log("Selected Category:", selectedCategory);

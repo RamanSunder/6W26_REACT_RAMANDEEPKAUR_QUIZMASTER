@@ -21,7 +21,6 @@ import Editcategory from "./components/admin/Category/Editcategory";
 
 import Layout from "./components/user/layout/Layout";
 import Home from "./components/user/Home/Home";
-import Performance from "./components/user/performance/Performance";
 import Categoryuser from "./components/user/category/Categoryuser";
 import Login from './components/Authentication/Login';
 import Question from "./components/admin/Question/Question";
@@ -29,6 +28,7 @@ import Addquestion from "./components/admin/Question/Addquestion";
 import Editquestion from "./components/admin/Question/Editquestion";
 import Questionuser from "./components/user/questionuser/Questionuser";
 import Myresult from "./components/user/myresult/Myresult";
+import Manageprofile from "./components/user/manageprofile/Manageprofile";
 
 
 
@@ -62,6 +62,7 @@ function App() {
             <Route path="/categoryuser" element={<Categoryuser />}></Route>
             <Route path="/questionuser/:categoryId" element={<Questionuser />}></Route>
             <Route path="/myresult" element={<Myresult />}></Route>
+            <Route path="/manageprofile" element={<Manageprofile />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

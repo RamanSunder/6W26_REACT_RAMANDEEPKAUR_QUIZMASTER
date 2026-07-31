@@ -22,6 +22,18 @@ export default function Myresult() {
   }
 
   return (
+<>
+    <div className="container-fluid bg-breadcrumb">
+          <div className="container text-center py-5" style={{ maxWidth: 900 }}>
+            <h4
+              className="text-white display-4 mb-4 wow fadeInDown"
+              data-wow-delay="0.1s"
+            >My Result
+            </h4>
+          </div>
+        </div>
+
+
     <div className="container py-5">
       <h2 className="mb-4">My Quiz Results</h2>
 
@@ -35,6 +47,8 @@ export default function Myresult() {
               <th>Correct</th>
               <th>Wrong</th>
               <th>Score</th>
+              <th>Percentage</th>
+
             </tr>
           </thead>
 
@@ -46,9 +60,9 @@ export default function Myresult() {
                 <td>{item.totalQuestion}</td>
                 <td>{item.correctAnswer}</td>
                 <td>{item.wrongAnswer}</td>
-                <td>
-                  {item.score}/{item.totalQuestion}
-                </td>
+                <td>{item.score}/{item.totalQuestion}</td>
+                <td>{item.percentage}</td>
+
               </tr>
             ))}
           </tbody>
@@ -57,5 +71,6 @@ export default function Myresult() {
         <h5>No quiz attempted yet.</h5>
       )}
     </div>
+    </>
   );
 }

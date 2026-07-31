@@ -66,8 +66,8 @@ export default function Header() {
                   </>
                 )}
 
-                <Link to="#" className="nav-item nav-link">
-                  Manage Profile
+                <Link to="manageprofile" className="nav-item nav-link">
+                  My Profile
                 </Link>
               </div>
             </div>

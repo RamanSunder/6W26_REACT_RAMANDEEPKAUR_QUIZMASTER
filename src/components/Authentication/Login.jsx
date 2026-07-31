@@ -114,21 +114,7 @@ export default function Login() {
                               />
                             </div>
 
-                            {/* <div className="mb-3">
-                              <h4 className="text-white">Register As</h4>
-
-                              <select
-                                className="form-control"
-                                name=""
-                                id=""
-                                onChange={(e) => setRole(e.target.value)}
-                              >
-                                <option value="">Select</option>
-
-                                <option value="admin">Principal</option>
-                                <option value="student">Student</option>
-                              </select>
-                            </div> */}
+                           
 
                             <div className="col-12">
                               <button

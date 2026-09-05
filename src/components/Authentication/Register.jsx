@@ -98,7 +98,7 @@ export default function Register() {
                       data-delay="1s"
                       style={{ animationDelay: "1s" }}
                     >
-                      <div className="bg-secondary rounded p-5 w-60">
+                      <div className="bg-secondary rounded p-5 w-50">
                         <h1 className="text-white mb-4">Register</h1>
                         <form onSubmit={Register}>
                           <div className="row g-3">

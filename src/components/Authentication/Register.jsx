@@ -90,7 +90,7 @@ export default function Register() {
                   bottom: 0,
                 }}
               >
-                <div className="container h-100 d-flex justify-content-center align-items-center">
+                <div className="container h-100 d-flex justify-content-center align-items-center w-50">
                   <div className="row justify-content-center ">
                     <div
                       className="fadeInLeft animated"

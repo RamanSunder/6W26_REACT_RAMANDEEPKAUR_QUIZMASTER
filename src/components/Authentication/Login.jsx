@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import {Link, useNavigate } from "react-router-dom";
+// import {Link, useNavigate } from "react-router-dom";
 import Registerservices from "../../services/Registerservices";
 export default function Login() {
   const [email, setEmail] = useState("");

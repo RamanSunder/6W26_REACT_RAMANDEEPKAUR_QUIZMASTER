@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 
 
 import Dashboard from "./components/admin/Dashboard/Dashboard";
-import Manageuser from "./components/admin/manageruser/Manageuser";
+// import Manageuser from "./components/admin/manageruser/Manageuser";
 import Adduser from "./components/admin/manageruser/Adduser";
 import Edituser from "./components/admin/manageruser/Edituser";
 import Category from "./components/admin/Category/Category";
@@ -39,7 +39,7 @@ function App() {
         <Routes>
           <Route path="/admin" element={<Adminlayout />}>
             <Route path="/admin" element={<Dashboard />}></Route>
-            <Route path="/admin/manageuser" element={<Manageuser />}></Route>
+            {/* <Route path="/admin/manageuser" element={<Manageuser />}></Route> */}
             <Route path="/admin/category" element={<Category />}></Route>
             <Route path="/admin/category/add" element={<Addcategory />}></Route>
             <Route path="/admin/category/edit/:id" element={<Editcategory />}></Route>

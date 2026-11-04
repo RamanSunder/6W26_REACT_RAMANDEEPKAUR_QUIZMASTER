@@ -1,93 +1,139 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-// import Registerservices from "../../services/Registerservices";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth, updateEmail } from "firebase/auth";
+import { db } from "../../../firebase/firebaseConfig";
+import Authservices from "../../../services/Authservices";
 
 export default function Manageprofile() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [userType, setUserType] = useState("");
   const [institutionId, setInstitutionId] = useState("");
 
-  const nav = useNavigate();
+  const [uid, setUid] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  async function Register(e) {
+  // Fetch logged-in user's profile
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        let user = Authservices.getData();
+
+        if (!user || !user.id) {
+          toast.error("Please login first");
+          return;
+        }
+
+        setUid(user.id);
+
+        let docRef = doc(db, "Register", user.id);
+        let snapshot = await getDoc(docRef);
+
+        if (snapshot.exists()) {
+          let data = snapshot.data();
+
+          setName(data.name || "");
+          setEmail(data.email || "");
+          setContact(data.contact || "");
+          setUserType(data.userType || "");
+          setInstitutionId(data.institutionId || "");
+        } else {
+          toast.error("Profile not found");
+        }
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProfile();
+  }, []);
+
+  // Update profile
+  async function updateProfile(e) {
     e.preventDefault();
 
     let pattern = /^[6-9]{1}[0-9]{9}$/;
 
-    if (!name || !email || !password || !contact || !userType || !institutionId) {
-      toast.error("All fields are required");
+    if (!name || !email || !contact) {
+      toast.error("Please fill all required fields");
       return;
     }
 
     if (!pattern.test(contact)) {
-      toast.error("Please enter a valid number");
+      toast.error("Please enter a valid contact number");
       return;
     }
 
     try {
-      let payload = {
+      let docRef = doc(db, "Register", uid);
+
+      // Update Firebase Authentication email if changed
+      let auth = getAuth();
+
+      if (auth.currentUser && auth.currentUser.email !== email) {
+        await updateEmail(auth.currentUser, email);
+      }
+
+      // Update Firestore document
+      await updateDoc(docRef, {
         name: name,
         email: email,
-        password: password,
         contact: contact,
-        userType: userType,
-        institutionId: institutionId,
-      };
+      });
 
-      // await Registerservices.Register(payload);
-      toast.success("Registered");
+      // Update localStorage data
+      let oldData = Authservices.getData();
+
+      Authservices.setData({
+        ...oldData,
+        name: name,
+        email: email,
+        contact: contact,
+      });
+
+      toast.success("Profile updated successfully!");
     } catch (error) {
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          toast.error("Email is already registered");
-          break;
+      console.log(error);
 
-        case "auth/invalid-email":
-          toast.error("Invalid email address");
-          break;
-
-        case "auth/weak-password":
-          toast.error("Password should be at least 6 characters");
-          break;
-
-        case "auth/network-request-failed":
-          toast.error("Please check your internet connection");
-          break;
-
-        default:
-          toast.error(error.message);
+      if (error.code === "auth/requires-recent-login") {
+        toast.error("Please logout and login again before changing email.");
+      } else if (error.code === "auth/email-already-in-use") {
+        toast.error("This email is already registered");
+      } else if (error.code === "auth/invalid-email") {
+        toast.error("Invalid email address");
+      } else {
+        toast.error(error.message);
       }
     }
+  }
+
+  if (loading) {
+    return <h4 className="text-center mt-5">Loading Profile...</h4>;
   }
 
   return (
     <>
       {/* Page Heading */}
       <div className="container-fluid bg-breadcrumb">
-        <div
-          className="container text-center py-5"
-          style={{ maxWidth: 900 }}
-        >
-          <h4
-            className="text-white display-4 mb-4 wow fadeInDown"
-            data-wow-delay="0.1s"
-          >
+        <div className="container text-center py-5" style={{ maxWidth: 900 }}>
+          <h4 className="text-white display-4 mb-4">
             My Profile
           </h4>
         </div>
       </div>
 
-      {/* Image + Form Section */}
+      {/* Profile Section */}
       <div
         className="profile-section"
         style={{
           position: "relative",
           width: "100%",
-          height: "100vh",
+          minHeight: "100vh",
           overflow: "hidden",
         }}
       >
@@ -97,12 +143,9 @@ export default function Manageprofile() {
           alt="Profile Background"
           style={{
             position: "absolute",
-            // top: 0,
-            // left: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center",
           }}
         />
 
@@ -110,33 +153,24 @@ export default function Manageprofile() {
         <div
           className="bg-secondary rounded container d-flex justify-content-center align-items-center w-50"
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            // top: "50%",
-            // right: "6%",
-            // transform: "translateY(-50%)",
-            // width: "360px",
-            // maxWidth: "90%",
-            // zIndex: 2,
+            position: "relative",
+            minHeight: "100vh",
+            padding: "40px 15px",
           }}
         >
-          <form >
-          <h4
-            className="mb-4 "
-            style={{
-              color: "red",
-              fontSize: "28px",
-              fontWeight: "400",
-            }}
-          >
-            Edit Profile
-          </h4>
+          <form onSubmit={updateProfile} className="w-100">
+            <h4
+              className="mb-4"
+              style={{
+                color: "red",
+                fontSize: "28px",
+                fontWeight: "400",
+              }}
+            >
+              Edit Profile
+            </h4>
 
-          
-            <div className="row g-3 w-70">
+            <div className="row g-3">
 
               {/* Email */}
               <div className="col-12 col-xl-6">
@@ -148,6 +182,7 @@ export default function Manageprofile() {
                     placeholder="Your Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                   <label htmlFor="email">Your Email</label>
                 </div>
@@ -163,67 +198,57 @@ export default function Manageprofile() {
                     placeholder="Your Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    required
                   />
                   <label htmlFor="name">Your Name</label>
                 </div>
               </div>
 
-              {/* Password */}
-              <div className="col-12 col-xl-6">
-                <div className="form-floating">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Your Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <label htmlFor="password">Your Password</label>
-                </div>
-              </div>
-
-              {/* Project */}
+              {/* Contact */}
               <div className="col-12 col-xl-6">
                 <div className="form-floating">
                   <input
                     type="text"
                     className="form-control"
-                    id="project"
-                    placeholder="Your Project"
+                    id="contact"
+                    placeholder="Your Contact"
+                    value={contact}
+                    onChange={(e) => setContact(e.target.value)}
+                    required
                   />
-                  <label htmlFor="project">Your Project</label>
+                  <label htmlFor="contact">Your Contact</label>
                 </div>
               </div>
 
-              {/* Subject */}
+              {/* User Type */}
+              <div className="col-12 col-xl-6">
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="userType"
+                    value={userType}
+                    readOnly
+                  />
+                  <label htmlFor="userType">User Type</label>
+                </div>
+              </div>
+
+              {/* Institution ID */}
               <div className="col-12">
                 <div className="form-floating">
                   <input
                     type="text"
                     className="form-control"
-                    id="subject"
-                    placeholder="Subject"
+                    id="institutionId"
+                    value={institutionId}
+                    readOnly
                   />
-                  <label htmlFor="subject">Subject</label>
+                  <label htmlFor="institutionId">Institution ID</label>
                 </div>
               </div>
 
-              {/* Message */}
-              <div className="col-12">
-                <div className="form-floating">
-                  <textarea
-                    className="form-control"
-                    placeholder="Leave a message here"
-                    id="message"
-                    style={{ height: "160px" }}
-                  ></textarea>
-
-                  <label htmlFor="message">Message</label>
-                </div>
-              </div>
-
-              {/* Button */}
+              {/* Update Button */}
               <div className="col-12">
                 <button
                   type="submit"
@@ -233,7 +258,7 @@ export default function Manageprofile() {
                     fontWeight: "500",
                   }}
                 >
-                  Send Message
+                  Update Profile
                 </button>
               </div>
 

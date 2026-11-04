@@ -32,9 +32,9 @@ export default function Adminheader() {
                   Dashboard
                 </Link>
                 
-                <Link to="/admin/manageuser" className="nav-item nav-link">
+                {/* <Link to="/admin/manageuser" className="nav-item nav-link">
                   Manage Users
-                </Link>
+                </Link> */}
                 <Link to="/admin/category" className="nav-item nav-link">
                   Categories
                 </Link>
@@ -43,9 +43,7 @@ export default function Adminheader() {
                 </Link>
                 
                 
-                <Link to="/admin/result" className="nav-item nav-link">
-                  Result
-                </Link>
+                
                 
               </div>
               

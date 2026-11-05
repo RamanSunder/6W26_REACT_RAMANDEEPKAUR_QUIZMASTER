@@ -166,11 +166,11 @@ export default function Category() {
 
                 <p>{category.description}</p>
 
-                <span
+                {/* <span
                   className={`badge ${category.status ? "bg-success" : "bg-danger"}`}
                 >
                   {category.status ? "Active" : "Inactive"}
-                </span>
+                </span> */}
 
                 <div className="mt-3">
                   <Link to={`/admin/category/edit/${category.id}`}>
